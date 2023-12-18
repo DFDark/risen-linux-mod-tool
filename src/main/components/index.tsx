@@ -3,7 +3,16 @@ import styled from 'styled-components';
 import { IMod } from '../../interfaces';
 
 const StatusRow = styled.div`
-  background-color: #545A6A;
+  /* background-color: #545A6A; */
+  color: var(--bs-light);
+  font-weight: bold;
+
+  & > span.activated > strong {
+    color: var(--bs-success);
+  }
+  & > span.selected > strong {
+    color: var(--bs-primary);
+  }
 `;
 
 const BorderDiv = styled.div`

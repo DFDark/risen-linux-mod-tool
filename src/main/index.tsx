@@ -114,12 +114,14 @@ class Main extends React.PureComponent<IProps, IState> {
     const {
       settingsModal,
     } = this.state;
+    const checkedModsCount = Array.from(checkedMods.entries()).filter(entry => entry[1]).length;
 
     return (<div className="d-flex flex-column flex-fill position-relative">
       <div className="d-flex" style={{ gap: 10 }}>
         <div className="flex-fill">
           <StatusRow>
-            Some status
+            <span className="activated">Activated mods: <strong>{activatedMods.length}</strong></span>
+            <span className="selected ms-3">Selected Mods: <strong>{checkedModsCount}</strong></span>
           </StatusRow>
         </div>
         <div className="d-flex justify-content-end">
