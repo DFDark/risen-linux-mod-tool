@@ -87,6 +87,19 @@ export default function reducer(state: IRLMTStore = defaultValue, action: RLMTAc
         checkedMods: new Map<string, boolean>(checkedMods),
       };
     };
+    case RLMTTypes.CHECK_ALL_MODS: {
+      const checkedMods = new Map<string, boolean>();
+      state.mods.forEach(mod => checkedMods.set(mod.path, true));
+      return {
+        ...state,
+        checkedMods,
+      };
+    };
+    case RLMTTypes.CLEAR_CHECKED_MODS:
+      return {
+        ...state,
+        checkedMods: new Map<string, boolean>(),
+      };
     default: return state;
   }
 }

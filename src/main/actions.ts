@@ -55,6 +55,14 @@ export interface ICheckMod {
   }
 }
 
+export interface ICheckAllMods {
+  type: RLMTTypes.CHECK_ALL_MODS;
+}
+
+export interface IClearCheckedMods {
+  type: RLMTTypes.CLEAR_CHECKED_MODS;
+}
+
 export type RLMTActionTypes = IInitializationRequest |
   IInitializationSuccess |
   IInitializationFailure |
@@ -64,7 +72,9 @@ export type RLMTActionTypes = IInitializationRequest |
   IActivateModRequest |
   IActivateModSuccess |
   IActivateModFailure |
-  ICheckMod;
+  ICheckMod |
+  ICheckAllMods |
+  IClearCheckedMods;
 
 export function initializationRequest(): IInitializationRequest {
   return {
@@ -134,5 +144,17 @@ export function checkMod(index: number, checked: boolean): ICheckMod {
   return {
     type: RLMTTypes.CHECK_MOD,
     payload: { index, checked },
+  };
+}
+
+export function checkAllMods(): ICheckAllMods {
+  return {
+    type: RLMTTypes.CHECK_ALL_MODS,
+  };
+}
+
+export function clearCheckedMods(): IClearCheckedMods {
+  return {
+    type: RLMTTypes.CLEAR_CHECKED_MODS,
   };
 }

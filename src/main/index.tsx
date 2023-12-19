@@ -5,6 +5,8 @@ import {
   selectModRequest,
   activateModRequest,
   checkMod,
+  checkAllMods,
+  clearCheckedMods,
 } from './actions';
 import { createStructuredSelector } from 'reselect';
 import {
@@ -45,6 +47,8 @@ interface IProps extends IStateProps {
   selectModRequest: typeof selectModRequest;
   activateModRequest: typeof activateModRequest;
   checkMod: typeof checkMod;
+  checkAllMods: typeof checkAllMods;
+  clearCheckedMods: typeof clearCheckedMods;
 }
 
 interface IState {
@@ -102,6 +106,14 @@ class Main extends React.PureComponent<IProps, IState> {
     this.props.checkMod(index, activation);
   }
 
+  private handleOnSelectAll = () => {
+    this.props.checkAllMods();
+  }
+
+  private handleOnClearSelection = () => {
+    this.props.clearCheckedMods();
+  }
+
   public render(): React.ReactNode {
     const {
       settings,
@@ -149,21 +161,35 @@ class Main extends React.PureComponent<IProps, IState> {
             </Scrollbars>
           </BorderDiv>
         </div>
-        <BorderDiv className="align-self-stretch" style={{ flex: 1 }}>
-          <Scrollbars style={{ width: '100%', height: '100%' }}>
-            {mods.map((mod, idx) => {
-              const isActive = activatedMods.indexOf(mod.path) !== -1;
-              return (<ModRow
-                key={`mod-row-${idx}`}
-                index={idx}
-                mod={mod}
-                checked={checkedMods.get(mod.path) || false}
-                active={isActive}
-                onModSelected={this.handleOnModSelected}
-                onModCheck={this.handleOnModCheck}
-              />);
-            })}
-          </Scrollbars>
+        <BorderDiv className="align-self-stretch d-flex flex-column" style={{ flex: 1 }}>
+          <div style={{ flex: 1 }}>
+            <Scrollbars style={{ width: '100%', height: '100%' }}>
+              {mods.map((mod, idx) => {
+                const isActive = activatedMods.indexOf(mod.path) !== -1;
+                return (<ModRow
+                  key={`mod-row-${idx}`}
+                  index={idx}
+                  mod={mod}
+                  checked={checkedMods.get(mod.path) || false}
+                  active={isActive}
+                  onModSelected={this.handleOnModSelected}
+                  onModCheck={this.handleOnModCheck}
+                />);
+              })}
+            </Scrollbars>
+          </div>
+          <div className="d-flex justify-content-center py-1" style={{ gap: 15 }}>
+            <button
+              type='button'
+              className="btn btn-secondary btn-sm"
+              onClick={this.handleOnSelectAll}
+            >Select all</button>
+            <button
+              type='button'
+              className="btn btn-secondary btn-sm"
+              onClick={this.handleOnClearSelection}
+            >Clear selection</button>
+          </div>
         </BorderDiv>
       </div>
       {settingsModal && <SettingsModal
@@ -199,6 +225,8 @@ function mapDispatchToProps(dispatch: Dispatch) {
     selectModRequest,
     activateModRequest,
     checkMod,
+    checkAllMods,
+    clearCheckedMods,
   }, dispatch);
 }
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

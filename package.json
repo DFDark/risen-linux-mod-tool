@@ -1,6 +1,6 @@
 {
   "name": "risen-linux-mod-tool",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "private": true,
   "main": "public/index.js",
   "homepage": "./",
